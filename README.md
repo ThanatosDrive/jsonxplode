@@ -59,6 +59,6 @@ df = to_dataframe(data)</code></pre>
 
 <ul>
 <li>7,900 rows with 23 columns processed in 0.146 seconds</li>
-<li>Memory usage: ~16MB for above mentioned worload</li>
+<li>Memory usage: ~16MB for above mentioned workload</li>
 <li>Consistent performance across varying data structures</li>
 </ul>
