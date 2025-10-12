@@ -1,16 +1,23 @@
-jsonxplode
-Efficient JSON flattening for complex nested structures
+<h1 align="center">jsonxplode</h1>
+<h3 align="center">Efficient JSON flattening for complex nested structures</h3>
 
-Python 3.6+ | MIT License | Zero Dependencies
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.6+-blue.svg" alt="Python Version" height="40rem">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" height="40rem">
+  <img src="https://img.shields.io/badge/dependencies-0-brightgreen.svg" alt="Dependencies" height="40rem">
+</p>
 
-jsonxplode converts nested JSON structures into flat tabular format while preserving all data, including complex nested arrays and objects with arbitrary depth.
+<p align="center">
+  jsonxplode converts nested JSON structures into flat tabular format while preserving all data, including complex nested arrays and objects with arbitrary depth.
+</p>
 
-Installation
-BASH
-pip install jsonxplode
-Usage
-PYTHON
-from jsonxplode import flatten
+<h2>Installation</h2>
+
+<pre><code class="language-bash">pip install jsonxplode</code></pre>
+
+<h2>Usage</h2>
+
+<pre><code class="language-python">from jsonxplode import flatten
 
 # Handles any JSON structure
 data = {
@@ -20,23 +27,37 @@ data = {
     ]
 }
 
-flattened_data = flatten(data)
-# Returns: [{'users.profile.name': 'John', 'users.profile.settings.theme': 'dark'}, 
-#           {'users.profile.name': 'Jane', 'users.profile.settings.theme': 'light'}]
-Optional: DataFrame Output
-PYTHON
-from jsonxplode import to_dataframe
+flattened_data = flatten(data)</code></pre>
+
+<p>Returns:</p>
+<pre><code class="language-python">[
+    {'users.profile.name': 'John', 'users.profile.settings.theme': 'dark'}, 
+    {'users.profile.name': 'Jane', 'users.profile.settings.theme': 'light'}
+]</code></pre>
+
+<h2>DataFrame Output (Optional)</h2>
+
+<pre><code class="language-python">from jsonxplode import to_dataframe
 
 # Requires pandas to be installed separately
-df = to_dataframe(data)
-Note: to_dataframe requires pandas (pip install pandas) but the core flatten function has zero dependencies.
+df = to_dataframe(data)</code></pre>
 
-Features
-Arbitrary nesting depth - handles deeply nested objects and arrays
-Conflict resolution - automatically manages key path conflicts
-Memory efficient - processes large datasets with minimal overhead
-Zero dependencies - pure Python implementation (core function)
-Array expansion - properly handles nested arrays with row duplication
-Performance
-7,900 rows with 23 column processed in 0.146 seconds
-Memory usage: ~46MB for previously mentioned workload
+<p><strong>Note:</strong> <code>to_dataframe</code> requires pandas (<code>pip install pandas</code>) but the core <code>flatten</code> function has zero dependencies.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li><strong>Arbitrary nesting depth</strong> - handles deeply nested objects and arrays</li>
+<li><strong>Conflict resolution</strong> - automatically manages key path conflicts</li>
+<li><strong>Memory efficient</strong> - processes large datasets with minimal overhead</li>
+<li><strong>Zero dependencies</strong> - pure Python implementation (core function)</li>
+<li><strong>Array expansion</strong> - properly handles nested arrays with row duplication</li>
+</ul>
+
+<h2>Performance</h2>
+
+<ul>
+<li>7,900 rows with 23 columns processed in 0.146 seconds</li>
+<li>Memory usage: ~16MB for above mentioned worload</li>
+<li>Consistent performance across varying data structures</li>
+</ul>
