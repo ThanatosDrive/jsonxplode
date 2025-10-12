@@ -22,7 +22,7 @@
 # Handles any JSON structure
 data = {
     "users": [
-        {"profile": {"name": "John", "settings": {"theme": "dark"}}},
+        {"profile": {"name": "John", "settings": {"theme": "dark"}, "location": ["city1", "city2"]}},
         {"profile": {"name": "Jane", "settings": {"theme": "light"}}}
     ]
 }
@@ -31,7 +31,8 @@ flattened_data = flatten(data)</code></pre>
 
 <p>Returns:</p>
 <pre><code class="language-python">[
-    {'users.profile.name': 'John', 'users.profile.settings.theme': 'dark'}, 
+    {'users.profile.name': 'John', 'users.profile.settings.theme': 'dark', 'user.profile.location': 'city1'},
+    {'users.profile.name': 'John', 'users.profile.settings.theme': 'dark', 'user.profile.location': 'city2'},
     {'users.profile.name': 'Jane', 'users.profile.settings.theme': 'light'}
 ]</code></pre>
 
