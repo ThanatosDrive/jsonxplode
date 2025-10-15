@@ -143,7 +143,7 @@ class FlattenJson:
                 # step through each list one by one list[1]
                 new_array = []
                 i = 0
-                for i in range(max_length + 1):
+                for i in range(max_length):
                     current_dictionary = {}
                     for key, value in data.items():
                         if isinstance(value, list) and len(value) > i:
