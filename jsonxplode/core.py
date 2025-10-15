@@ -130,59 +130,52 @@ class FlattenJson:
                     if temporary_column_data:
                         key_counter = temp_key_counter
                         column_data = temporary_column_data
-            all_lists_are_same_length = False
-            if self.relational_array_flattening:
-                previous_value = 0
-                first_value = True
-                max_length = 0
-                # check if lists are same length array
-                for key, value in data.items():
-                    if isinstance(value, list):
-                        if not first_value and previous_value != len(value):
-                            all_lists_are_same_length = False
-                            break
-                        all_lists_are_same_length = True
-                        previous_value = len(value)
-                        first_value = False
-                        if max_length < len(value):
-                            max_length = len(value)
-                if all_lists_are_same_length and self.relational_array_flattening:
-                    # step through each list one by one list[1]
-                    new_array = []
-                    i = 0
-                    for i in range(max_length):
-                        current_dictionary = {}
-                        for key, value in data.items():
-                            if isinstance(value, list):
+            previous_value = 0
+            max_length = 0
+            count_of_lists = 0
+            # check if lists are same length array
+            for key, value in data.items():
+                if isinstance(value, list):
+                    count_of_lists += 1
+                    if max_length < len(value):
+                        max_length = len(value)
+            if self.relational_array_flattening and count_of_lists > 1:
+                # step through each list one by one list[1]
+                new_array = []
+                i = 0
+                for i in range(max_length + 1):
+                    current_dictionary = {}
+                    for key, value in data.items():
+                        if isinstance(value, list) and len(value) > i:
                                 current_dictionary[key] = value[i]
-                        new_array.append(current_dictionary)
-                    for row in new_array:
-                        if isinstance(row, (dict, list)):
-                            result, saved_above, temp_key_counter = self.flatten_json(row, column_data=column_data.copy(),
-                                                                                      value_name=value_name,
-                                                                                      key_counter=key_counter.copy())
-                            if result and not saved_above:
-                                self.complete_data.append(result)
-                                saved_data = True
+                    new_array.append(current_dictionary)
+                for row in new_array:
+                    if isinstance(row, (dict, list)):
+                        result, saved_above, temp_key_counter = self.flatten_json(row, column_data=column_data.copy(),
+                                                                                  value_name=value_name,
+                                                                                  key_counter=key_counter.copy())
+                        if result and not saved_above:
+                            self.complete_data.append(result)
+                            saved_data = True
+                    else:
+                        temp_value_name = value_name
+
+                        if value_name in key_counter:
+                            if not already_incremented_key_counter:
+                                key_counter[value_name] += 1
+                            if key_counter[value_name] != 0:
+                                temp_value_name = f"{value_name}_{key_counter[value_name]}"
                         else:
-                            temp_value_name = value_name
+                            key_counter[value_name] = 0
+                        already_incremented_key_counter = True
 
-                            if value_name in key_counter:
-                                if not already_incremented_key_counter:
-                                    key_counter[value_name] += 1
-                                if key_counter[value_name] != 0:
-                                    temp_value_name = f"{value_name}_{key_counter[value_name]}"
-                            else:
-                                key_counter[value_name] = 0
-                            already_incremented_key_counter = True
-
-                            column_data[temp_value_name] = row
-                            if column_data:
-                                self.complete_data.append(column_data.copy())
-                                saved_data = True
-                    if saved_data:
-                        saved_above = True
-            if not self.relational_array_flattening or not all_lists_are_same_length:
+                        column_data[temp_value_name] = row
+                        if column_data:
+                            self.complete_data.append(column_data.copy())
+                            saved_data = True
+                if saved_data:
+                    saved_above = True
+            else:
                 for key, value in data.items():
                     if isinstance(value, list):
                         temporary_column_data, saved_above, temp_key_counter = self.flatten_json(value, column_data=column_data.copy(), value_name=f"{temp_value_name}{key}", key_counter=key_counter.copy())
