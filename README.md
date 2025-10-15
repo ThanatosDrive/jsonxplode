@@ -11,6 +11,13 @@
   jsonxplode converts nested JSON structures into flat tabular format while preserving all data, including complex nested arrays and objects with arbitrary depth.
 </p>
 
+<h2>Version Update: v1.2.1</h2>
+
+<h3>Bug fix</h3>
+
+<p><strong>Relational Array Flattening</strong> - Fixed trailing parent data:</p>
+
+
 <h2>Version Update: v1.2.0</h2>
 
 <h3>Bug fix</h3>
