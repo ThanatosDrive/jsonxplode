@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="jsonxplode",
-    version="1.1.0",
+    version="1.2.0",
     author="ThanatosDrive",
     description="Efficient JSON flattening for complex nested structures",
     long_description=long_description,
