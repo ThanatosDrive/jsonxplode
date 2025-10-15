@@ -11,6 +11,38 @@
   jsonxplode converts nested JSON structures into flat tabular format while preserving all data, including complex nested arrays and objects with arbitrary depth.
 </p>
 
+<h2>Version Update: v1.1.0</h2>
+
+<h3>Bug fix</h3>
+
+<p><strong>Relational Array Flattening</strong> - Arrays of the same length are now flattened relationally by default, preserving positional relationships:</p>
+
+<h2>Control Relational Array Flattening</h2>
+
+<p>Control how arrays are flattened with the <code>relational_array</code> parameter:</p>
+
+<pre><code class="language-python"># Default - preserves relationships between arrays
+flattener = FlattenJson(relational_array=True)
+
+# Independent flattening of arrays  
+flattener = FlattenJson(relational_array=False)</code></pre>
+
+<h3>Example with Relational Flattening (Default)</h3>
+
+<pre><code class="language-python">data = {
+    "name": "John",
+    "a": [1, 2, 3],
+    "b": [1, 2, 3]
+}
+result = flattener.flatten(data)</code></pre>
+
+<p>Returns:</p>
+<pre><code class="language-python">[
+    {"name": "John", "a": 1, "b": 1},
+    {"name": "John", "a": 2, "b": 2},
+    {"name": "John", "a": 3, "b": 3}
+]</code></pre>
+
 <h2>Installation</h2>
 
 <pre><code class="language-bash">pip install jsonxplode</code></pre>
